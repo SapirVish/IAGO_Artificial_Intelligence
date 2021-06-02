@@ -3,7 +3,7 @@
 
 #NOTE: If agent0 is left blank, then the user will play against agent1.  If agent0 and agent1 are occupied, those two agents play against each other.
 agent0= 
-agent1= edu.usc.ict.iago.agent.IAGOUrsulaFavorVH
+agent1= edu.usc.ict.iago.our_agents.AgentIAGOVH
 #NOTE: Gamespec specified which game will be loaded into the system.
 gamespec=edu.usc.ict.iago.views.ViralGameSpec
 
