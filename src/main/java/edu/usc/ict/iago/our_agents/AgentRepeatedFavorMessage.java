@@ -175,7 +175,7 @@ public class AgentRepeatedFavorMessage extends IAGOCoreMessage implements Messag
 			return new Event(agentID, Event.EventClass.SEND_MESSAGE, Event.SubClass.FAVOR_REQUEST, 
 					"Excuse me, but you still owe me a favor.  Accept my favor request, so you can pay me back!",
 					(int) (1000*game.getMultiplier()));
-		else if (lb != LedgerBehavior.NONE && lb != LedgerBehavior.BETRAYING && utils.getLedger() < 0)
+		else if (lb != LedgerBehavior.NONE && lb != LedgerBehavior.GREEDY && utils.getLedger() < 0)
 		{
 			utils.modifyVerbalLedger(1);
 			return new Event(agentID, Event.EventClass.SEND_MESSAGE, Event.SubClass.FAVOR_ACCEPT, 
@@ -509,7 +509,7 @@ public class AgentRepeatedFavorMessage extends IAGOCoreMessage implements Messag
 			sc = Event.SubClass.GENERIC_NEG;
 			break;
 		case FAVOR_REQUEST:
-			boolean paysLedger = (lb == LedgerBehavior.FAIR || lb == LedgerBehavior.LIMITED);
+			boolean paysLedger = (lb == LedgerBehavior.FAIR);
 			if(lb == LedgerBehavior.NONE)
 			{
 				str += "I don't really do favors.";

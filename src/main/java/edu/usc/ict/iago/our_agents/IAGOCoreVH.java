@@ -174,6 +174,7 @@ public abstract class IAGOCoreVH extends GeneralVH
 			this.utils = aue;
 			this.messages.setUtils(utils);
 			this.behavior.setUtils(utils);	
+			this.expression.setGameCount(this.currentGameCount);
 			this.disable = false;
 
 			//if we wanted, we could change our Policies between games... but not easily.  Probably don't do that.  Just don't.
@@ -468,15 +469,18 @@ public abstract class IAGOCoreVH extends GeneralVH
 					localEqual = true;
 			}
 
-			if (behavior instanceof IAGOCompetitiveBehavior) 
+			if ((behavior instanceof IAGOCompetitiveBehavior))
 			{
 				totalFair = ((IAGOCompetitiveBehavior) behavior).acceptOffer(o);
+			}
+			else if (behavior instanceof AgentRepeatedFavorBehavior && currentGameCount > 2) {
+				totalFair = ((AgentRepeatedFavorBehavior) behavior).acceptOffer(o);
 			}
 			else if(utils.myActualOfferValue(o) + behavior.getAcceptMargin() > utils.adversaryValue(o, utils.getMinimaxOrdering()))
 				totalFair = true;//total offer still fair
 			
 			//totalFair too hard, so always set to true here
-			totalFair = true;
+//			totalFair = true;
 
 			if (localFair && !totalFair)
 			{

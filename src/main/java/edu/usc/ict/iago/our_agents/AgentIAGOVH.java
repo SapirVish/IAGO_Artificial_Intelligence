@@ -22,7 +22,7 @@ public class AgentIAGOVH extends IAGOCoreVH {
 	public AgentIAGOVH(String name, GameSpec game, Session session)
 	{
 		super("Agent101", game, session, new AgentRepeatedFavorBehavior(AgentRepeatedFavorBehavior.LedgerBehavior.FAIR), new AgentRepeatedFavorExpression(), 
-				new AgentRepeatedFavorMessage(false, false, AgentRepeatedFavorBehavior.LedgerBehavior.FAIR, game));	
+				new AgentRepeatedFavorMessage(false, true, AgentRepeatedFavorBehavior.LedgerBehavior.FAIR, game));	
 		
 		super.safeForMultiAgent = true;
 	}

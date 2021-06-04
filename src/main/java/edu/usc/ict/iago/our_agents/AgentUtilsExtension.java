@@ -23,7 +23,7 @@ class AgentUtilsExtension
 	private LinkedList<Preference> preferences = new LinkedList<Preference>();
 	public int adversaryBATNA = -1;
 	public int myPresentedBATNA = -1;
-	public final double LIE_THRESHOLD = 0.6; 	
+	public double LIE_THRESHOLD = 0.6; 	
 	protected ArrayList<Boolean>  previouslyOffered = new ArrayList<Boolean>();
 	public boolean competitive = false;
 	public int myRow;
@@ -677,7 +677,9 @@ class AgentUtilsExtension
 		this.agent.modifyOfferLedger(increment);
 	}
 
-
+	public int getCurrentGame() {
+		return this.agent.getGameCount();
+	}
 
 }
 

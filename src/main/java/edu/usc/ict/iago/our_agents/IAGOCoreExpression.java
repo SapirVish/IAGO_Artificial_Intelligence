@@ -9,4 +9,6 @@ public abstract class IAGOCoreExpression implements ExpressionPolicy
 	protected abstract String getFairEmotion();
 	
 	protected abstract String getUnfairEmotion();
+	
+	protected abstract void setGameCount(int gameCount);
 }

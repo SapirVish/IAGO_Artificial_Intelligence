@@ -5,6 +5,8 @@ import edu.usc.ict.iago.utils.ExpressionPolicy;
 import edu.usc.ict.iago.utils.History;
 
 public class RepeatedFavorExpression extends IAGOCoreExpression implements ExpressionPolicy{
+	private int gameCount = 0;
+
 	
 	protected String getSemiFairEmotion()
 	{
@@ -94,4 +96,11 @@ public class RepeatedFavorExpression extends IAGOCoreExpression implements Expre
 			return null;
 		
 	}
+	
+
+	@Override
+	protected void setGameCount(int gameCount) {
+		this.gameCount = gameCount;
+	}
+	
 }

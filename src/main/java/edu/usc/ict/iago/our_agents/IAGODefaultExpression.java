@@ -9,6 +9,8 @@ import edu.usc.ict.iago.utils.History;
  */
 public class IAGODefaultExpression extends IAGOCoreExpression implements ExpressionPolicy {
 
+	private int gameCount = 0;
+	
 	@Override
 	public String getExpression(History history) 
 	{
@@ -29,5 +31,9 @@ public class IAGODefaultExpression extends IAGOCoreExpression implements Express
 	protected String getUnfairEmotion() {
 		return null;
 	}
-
+	
+	@Override
+	protected void setGameCount(int gameCount) {
+		this.gameCount = gameCount;
+	}
 }
