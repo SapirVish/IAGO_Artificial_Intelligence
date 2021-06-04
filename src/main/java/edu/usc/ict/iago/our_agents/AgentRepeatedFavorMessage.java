@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-import edu.usc.ict.iago.our_agents.RepeatedFavorBehavior.LedgerBehavior;
+import edu.usc.ict.iago.our_agents.AgentRepeatedFavorBehavior.LedgerBehavior;
 import edu.usc.ict.iago.utils.Event;
 import edu.usc.ict.iago.utils.GameSpec;
 import edu.usc.ict.iago.utils.History;
@@ -60,7 +60,7 @@ public class AgentRepeatedFavorMessage extends IAGOCoreMessage implements Messag
 
 	private boolean isWithholding;
 	private boolean lying;
-	private RepeatedFavorBehavior.LedgerBehavior lb;
+	private AgentRepeatedFavorBehavior.LedgerBehavior lb;
 	private AgentUtilsExtension utils;
 	private int opponentBATNA = -1;
 	private int agentID;
@@ -80,7 +80,7 @@ public class AgentRepeatedFavorMessage extends IAGOCoreMessage implements Messag
 	 * @param lb an enum representing how the agent talks about favors
 	 * @param gs the gameSpec
 	 */
-	public AgentRepeatedFavorMessage(boolean isWithholding, boolean lying, RepeatedFavorBehavior.LedgerBehavior lb, GameSpec gs) 
+	public AgentRepeatedFavorMessage(boolean isWithholding, boolean lying, AgentRepeatedFavorBehavior.LedgerBehavior lb, GameSpec gs) 
 	{
 		this.isWithholding = isWithholding;
 		this.lying = lying;

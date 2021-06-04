@@ -21,15 +21,15 @@ public class AgentIAGOVH extends IAGOCoreVH {
 	 */
 	public AgentIAGOVH(String name, GameSpec game, Session session)
 	{
-		super("JiminyFavor", game, session, new RepeatedFavorBehavior(RepeatedFavorBehavior.LedgerBehavior.FAIR), new RepeatedFavorExpression(), 
-				new RepeatedFavorMessage(false, false, RepeatedFavorBehavior.LedgerBehavior.FAIR, game));	
+		super("Agent101", game, session, new AgentRepeatedFavorBehavior(AgentRepeatedFavorBehavior.LedgerBehavior.FAIR), new AgentRepeatedFavorExpression(), 
+				new AgentRepeatedFavorMessage(false, false, AgentRepeatedFavorBehavior.LedgerBehavior.FAIR, game));	
 		
 		super.safeForMultiAgent = true;
 	}
 
 	@Override
 	public String getArtName() {
-		return "Rens";
+		return "Agent";
 	}
 
 	@Override
