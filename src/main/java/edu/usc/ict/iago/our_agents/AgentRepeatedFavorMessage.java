@@ -187,7 +187,7 @@ public class AgentRepeatedFavorMessage extends IAGOCoreMessage implements Messag
 
 	public Event getVerboseMessageResponse(History history, GameSpec game, Event ePrime) {
 	
-		int randomDelay = new Random().nextInt(2000) + 3000;			//causes message delays to vary in a range between 3-5 seconds to appear more human-like
+		int randomDelay = new Random().nextInt(2000) + 1000;			//causes message delays to vary in a range between 3-5 seconds to appear more human-like
 		int delay = (int) (randomDelay*game.getMultiplier()); 
 		int value = -1;
 		int issue1 = -1;
@@ -221,7 +221,7 @@ public class AgentRepeatedFavorMessage extends IAGOCoreMessage implements Messag
 		if (p != null) //a preference was expressed
 		{
 			String str = "";
-			if(p.isQuery() && this.isWithholding) 
+			if(p.isQuery() && this.isWithholding && false) 
 			{ //asked about preferences
 
 				str = "I don't think it best to reveal my intentions yet. Maybe if you did first...";
@@ -403,46 +403,50 @@ public class AgentRepeatedFavorMessage extends IAGOCoreMessage implements Messag
 				isQuery = false;
 
 			} 
-			else if (p == null && isWithholding) {
+			else if (p == null && isWithholding || (p.isQuery() && !shouldAnswerQuestion())) {
 				str = "I don't think it best to reveal my intentions yet. Maybe if you did first...";
 				sc = Event.SubClass.PREF_WITHHOLD;
 				break;
 			}
-			if (p.getRelation() == Relation.BEST)
-			{
-				issue1 = utils.findMyItemIndex(game, 1);
-				issue2 = -1;
-				relation = Relation.BEST;
-				isQuery = false;
-				str = "I like " + utils.getSpec().getIssuePluralText().get(issue1) + " the best.";
-
-			}
-			else if (p.getRelation() == Relation.WORST)
-			{
-				issue1 = utils.findMyItemIndex(game, game.getNumberIssues());
-				issue2 = -1;
-				relation = Relation.WORST;
-				isQuery = false;
-				str = "I like " + utils.getSpec().getIssuePluralText().get(issue1) + " the least.";
-			}
-			else
-			{
-				if(p.getIssue1() == -1 || p.getIssue2() == -1) {
-					str = "Can you be a little more specific? Saying \"something\" is confusing.";
-					sc = Event.SubClass.PREF_SPECIFIC_REQUEST;
-				} else {
-					int value1 = game.getSimplePoints(agentID).get(game.getIssuePluralText().get(p.getIssue1()));
-					int value2 = game.getSimplePoints(agentID).get(game.getIssuePluralText().get(p.getIssue2()));
-					issue1 = p.getIssue1();
-					issue2 = p.getIssue2();
-					if(value1 > value2)
-						relation = Relation.GREATER_THAN;
-					else if (value2 > value1)
-						relation = Relation.LESS_THAN;
-					else
-						relation = Relation.EQUAL;
-					str = prefToEnglish(new Preference(p.getIssue1(), p.getIssue2(), relation, false), game);
+			
+			if (p.isQuery()) {
+				
+				if (p.getRelation() == Relation.BEST)
+				{
+					issue1 = utils.findMyItemIndex(game, 1);
+					issue2 = -1;
+					relation = Relation.BEST;
 					isQuery = false;
+					str = "I like " + utils.getSpec().getIssuePluralText().get(issue1) + " the best.";
+	
+				}
+				else if (p.getRelation() == Relation.WORST)
+				{
+					issue1 = utils.findMyItemIndex(game, game.getNumberIssues());
+					issue2 = -1;
+					relation = Relation.WORST;
+					isQuery = false;
+					str = "I like " + utils.getSpec().getIssuePluralText().get(issue1) + " the least.";
+				}
+				else
+				{
+					if(p.getIssue1() == -1 || p.getIssue2() == -1) {
+						str = "Can you be a little more specific? Saying \"something\" is confusing.";
+						sc = Event.SubClass.PREF_SPECIFIC_REQUEST;
+					} else {
+						int value1 = game.getSimplePoints(agentID).get(game.getIssuePluralText().get(p.getIssue1()));
+						int value2 = game.getSimplePoints(agentID).get(game.getIssuePluralText().get(p.getIssue2()));
+						issue1 = p.getIssue1();
+						issue2 = p.getIssue2();
+						if(value1 > value2)
+							relation = Relation.GREATER_THAN;
+						else if (value2 > value1)
+							relation = Relation.LESS_THAN;
+						else
+							relation = Relation.EQUAL;
+						str = prefToEnglish(new Preference(p.getIssue1(), p.getIssue2(), relation, false), game);
+						isQuery = false;
+					}
 				}
 			}
 			break;
@@ -577,6 +581,20 @@ public class AgentRepeatedFavorMessage extends IAGOCoreMessage implements Messag
 		}
 		return resp; 
 
+	}
+	
+	private boolean shouldAnswerQuestion() {
+		switch (this.utils.getCurrentGame()) {
+		case 1: {
+			return true;
+		}
+		case 2: {
+			double answer = Math.random();
+			return answer >= 0.5;
+		}
+		default:
+			return false;
+		}
 	}
 
 
