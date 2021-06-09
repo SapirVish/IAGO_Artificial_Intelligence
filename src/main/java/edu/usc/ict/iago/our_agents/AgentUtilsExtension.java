@@ -28,7 +28,7 @@ class AgentUtilsExtension
 	public boolean competitive = false;
 	public int myRow;
 	public int adversaryRow;
-	private boolean isFixedPie = false;
+	private boolean isFixedPie = true;
 
 	/**
 	 * Constructor for the AUE.

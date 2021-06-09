@@ -173,8 +173,11 @@ public class AgentRepeatedFavorBehavior extends IAGOCoreBehavior implements Beha
 		{
 			if (free[userFave] >= 2) // If there are more than two of that issue, propose an offer where the VH and
 										// player each get one more of that issue
-				propose.setItem(userFave, new int[] { allocated.getItem(userFave)[0] + 1, free[userFave] - 2,
-						allocated.getItem(userFave)[2] + 1 });
+			{
+				int userAddedAmount = free[userFave] / 2;
+				propose.setItem(userFave, new int[] { allocated.getItem(userFave)[0] + userAddedAmount, free[userFave] - (2* userAddedAmount),
+						allocated.getItem(userFave)[2] + userAddedAmount });
+			}
 			else // Otherwise just give the one item left to us, the agent
 			{
 				if (utils.adversaryRow == 0) {
@@ -189,14 +192,19 @@ public class AgentRepeatedFavorBehavior extends IAGOCoreBehavior implements Beha
 		{
 			// Give both the VH and the player half the free amount of the item they want
 			// most
-			int userAddedAmount = free[userFave] > 1 ? free[userFave] / 2 : 1;
-			int opponentAddedAmount = free[opponentFave] > 1 ? free[opponentFave] / 2 : 1;
-			int addAmount = Math.min(userAddedAmount, opponentAddedAmount);
+			int addAmount = Math.min(free[userFave], free[opponentFave]);
 
-			propose.setItem(userFave, new int[] { allocated.getItem(userFave)[0], free[userFave] - addAmount,
-					allocated.getItem(userFave)[2] + addAmount });
-			propose.setItem(opponentFave, new int[] { allocated.getItem(opponentFave)[0] + addAmount,
-					free[opponentFave] - addAmount, allocated.getItem(opponentFave)[2] });
+			if (utils.adversaryRow == 2) {
+				propose.setItem(userFave, new int[] { allocated.getItem(userFave)[0], free[userFave] - addAmount,
+						allocated.getItem(userFave)[2] + addAmount });
+				propose.setItem(opponentFave, new int[] { allocated.getItem(opponentFave)[0] + addAmount,
+						free[opponentFave] - addAmount, allocated.getItem(opponentFave)[2] });
+			} else if (utils.adversaryRow == 0) {
+				propose.setItem(userFave, new int[] { allocated.getItem(userFave)[0] + addAmount, free[userFave] - addAmount,
+						allocated.getItem(userFave)[2] });
+				propose.setItem(opponentFave, new int[] { allocated.getItem(opponentFave)[0],
+						free[opponentFave] - addAmount, allocated.getItem(opponentFave)[2] + addAmount });
+			}
 		}
 
 		return propose;
