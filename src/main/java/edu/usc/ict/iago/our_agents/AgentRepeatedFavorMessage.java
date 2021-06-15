@@ -187,7 +187,7 @@ public class AgentRepeatedFavorMessage extends IAGOCoreMessage implements Messag
 
 	public Event getVerboseMessageResponse(History history, GameSpec game, Event ePrime) {
 	
-		int randomDelay = new Random().nextInt(2000) + 1000;			//causes message delays to vary in a range between 3-5 seconds to appear more human-like
+		int randomDelay = new Random().nextInt(250);			//causes message delays to vary in a range between 3-5 seconds to appear more human-like
 		int delay = (int) (randomDelay*game.getMultiplier()); 
 		int value = -1;
 		int issue1 = -1;

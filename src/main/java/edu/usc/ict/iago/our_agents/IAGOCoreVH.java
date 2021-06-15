@@ -270,7 +270,7 @@ public abstract class IAGOCoreVH extends GeneralVH
 			String expr = expression.getExpression(getHistory());
 			if (expr != null)
 			{
-				Event e1 = new Event(this.getID(), Event.EventClass.SEND_EXPRESSION, expr, 2000, (int) (700*game.getMultiplier()));
+				Event e1 = new Event(this.getID(), Event.EventClass.SEND_EXPRESSION, expr, 2500, (int) (700*game.getMultiplier()));
 				resp.add(e1);
 			}
 			Event e0 = messages.getVerboseMessageResponse(getHistory(), game, e);
@@ -463,9 +463,9 @@ public abstract class IAGOCoreVH extends GeneralVH
 				int myValue = utils.myActualOfferValue(o) - utils.myActualOfferValue(allocated) + behavior.getAcceptMargin();
 				ServletUtils.log("My target: " + myValue, ServletUtils.DebugLevels.DEBUG);
 				int opponentValue = utils.adversaryValue(o, utils.getMinimaxOrdering()) - utils.adversaryValue(allocated, utils.getMinimaxOrdering());
-				if(myValue > opponentValue)
+				if(myValue >= opponentValue)
 					localFair = true;//offer improvement is within one max value item of the same for me and my opponent
-				else if (myValue == opponentValue && !firstOffer)
+				if (myValue == opponentValue && !firstOffer)
 					localEqual = true;
 			}
 
@@ -476,7 +476,7 @@ public abstract class IAGOCoreVH extends GeneralVH
 			else if (behavior instanceof AgentRepeatedFavorBehavior && currentGameCount > 2) {
 				totalFair = ((AgentRepeatedFavorBehavior) behavior).acceptOffer(o);
 			}
-			else if(utils.myActualOfferValue(o) + behavior.getAcceptMargin() > utils.adversaryValue(o, utils.getMinimaxOrdering()))
+			else if(utils.myActualOfferValue(o) + behavior.getAcceptMargin() >= utils.adversaryValue(o, utils.getMinimaxOrdering()))
 				totalFair = true;//total offer still fair
 			
 			//totalFair too hard, so always set to true here
